@@ -33,11 +33,6 @@ def scoreboard(round, ai_score, player_score):
     print ("Computer: {}".format(ai_score))
     print ("You: {}".format(player_score))
 
-def play():
-    result = compare_moves()
-    scoreboard()
-    again += nextRound()
-
 def compare_moves():
     ai = moveAI()
     player = movePlayer()
@@ -82,10 +77,16 @@ def printMove(player, move):
         print ("{} chose Scissors!".format(player))
 
 def nextRound():
-    move = raw_input("Play Again? (y/n)")
-    if move == 'y':
-        return 1
-    else:
-        return -1
+    tries = 1
+    while tries > 0:
+        move = raw_input("Play Again? (y/n)")
+        if move == 'y':
+            tries = 0
+            return 1
+        elif move == 'n':
+            tries = 0
+            return -1
+        else:
+            print ("Invalid entry...")
 
 game()
