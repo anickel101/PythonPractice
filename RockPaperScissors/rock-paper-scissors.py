@@ -1,12 +1,68 @@
 import random
 
-ai_score = 0
-player_score = 0
-round = 1
-again = True
+def game():
+
+    ai_score = 0
+    player_score = 0
+    round = 0
+    playing = 1
+
+    game_prompt()
+    scoreboard(round, ai_score, player_score)
+
+    while playing > 0:
+        winner = compare_moves()
+        if winner == 1:
+            print ("Player wins!")
+            player_score += 1
+        elif winner == -1:
+            print ("Computer wins!")
+            ai_score +=1
+        else:
+            print ("Tie Game!")
+        
+        scoreboard(round, ai_score, player_score)
+        
+        playing = nextRound()
 
 def game_prompt():
     print ("Hello! Welcome to Rocks, Paper, Scissors...Shoot!")
+
+def scoreboard(round, ai_score, player_score):
+    print ("Round: {}".format(round))
+    print ("Computer: {}".format(ai_score))
+    print ("You: {}".format(player_score))
+
+def play():
+    result = compare_moves()
+    scoreboard()
+    again += nextRound()
+
+def compare_moves():
+    ai = moveAI()
+    player = movePlayer()
+    printMove("Computer", ai)
+    printMove("You", player)
+    winner = 1
+    if ai == 1:
+        if player == 2:
+            winner = 1
+        elif player == 3:
+            winner = -1
+    elif ai == 2:
+        if player == 1:
+            winner = -1
+        elif player == 3:
+            winner = 1
+    elif ai == 3:
+        if player == 1:
+            winner = 1
+        elif player == 2:
+            winner = -1
+    else:
+        winner = 0
+
+    return winner
 
 def moveAI():
     move = random.randint(1,3)
@@ -25,48 +81,11 @@ def printMove(player, move):
     else:
         print ("{} chose Scissors!".format(player))
 
-def compare_moves(ai_score, player_score):
-    ai = moveAI()
-    player = movePlayer()
-    printMove("Computer", ai)
-    printMove("You", player)
-    if ai == 1:
-        if player == 2:
-            player_score += 1
-        elif player == 3:
-            ai_score += 1
-    elif ai == 2:
-        if player == 1:
-            ai_score += 1
-        elif player == 3:
-            player_score += 1
-    elif ai == 3:
-        if player == 1:
-            player_score += 1
-        elif player == 2:
-            ai_score += 1
-
-
-def play():
-    while again == True:
-        compare_moves(ai_score, player_score)
-        scoreboard()
-        nextRound()
-
 def nextRound():
     move = raw_input("Play Again? (y/n)")
     if move == 'y':
-        again = True
+        return 1
     else:
-        again = False
-
-def scoreboard():
-    print ("Computer: {}".format(ai_score))
-    print ("You: {}".format(player_score))
-
-def game():
-    game_prompt()
-    scoreboard()
-    play()
+        return -1
 
 game()
