@@ -64,9 +64,15 @@ def moveAI():
     return move
 
 def movePlayer():
-    m = int(raw_input("Choose [1] for Rocks, [2] for Paper, or [3] for Scissors..."))
-    print m
-    return m
+    tries = 1
+    while tries > 0:
+        m = int(raw_input("Choose [1] for Rocks, [2] for Paper, or [3] for Scissors..."))
+        if m == 1 or m == 2 or m == 3:
+            print m
+            tries = 0
+            return m
+        else:
+            print ("Invalid entry...")
 
 def printMove(player, move):
     if move == 1:
